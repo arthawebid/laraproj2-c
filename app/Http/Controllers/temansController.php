@@ -21,7 +21,7 @@ class temansController extends Controller
      */
     public function create()
     {
-        //
+        return view('temans.create');
     }
 
     /**
@@ -29,7 +29,23 @@ class temansController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama'=>'required|max:50',
+            'alamat'=>'required',
+            'kota'=>'required|max:50',
+            'telp'=>'required|max:20',
+        ]);
+
+        DB::table('temans')->insert([
+            'nama'=>$request->nama,
+            'alamat'=>$request->alamat,
+            'kota'=>$request->kota,
+            'telp'=>$request->telp,
+            'created_at'=>now(),
+            'updated_at'=>now()
+        ]);
+
+        return redirect()->route('temans.index')->with('sukses','Data Berhasil ditambahkan');
     }
 
     /**
