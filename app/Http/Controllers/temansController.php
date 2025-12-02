@@ -61,7 +61,11 @@ class temansController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $dta = DB::table('temans')->where('id',$id)->first();
+        if(!$dta){
+            abort(404);
+        }
+        return view('temans.edit',compact('dta'));
     }
 
     /**
@@ -69,7 +73,21 @@ class temansController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'nama'=>'required|max:50',
+            'alamat'=>'required',
+            'kota'=>'required|max:50',
+            'telp'=>'required|max:20',
+        ]);
+
+        DB::table('temans')->where('id',$id)->update([
+            'nama'=>$request->nama,
+            'alamat'=>$request->alamat,
+            'kota'=>$request->kota,
+            'telp'=>$request->telp,
+            'updated_at'=>now()
+        ]);
+        return redirect()->route('temans.index')->with('sukses','Data Berhasil diUbah');
     }
 
     /**
