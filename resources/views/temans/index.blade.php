@@ -21,7 +21,13 @@
         <tr>
             <td>{{ $loop->iteration }}</td>
             <td>{{ $d->nama }}</td>
-            <td><a href="{{ route('temans.edit', $d->id) }}" class="btn btn-warning btn-sm"> Ubah </a> | Hapus </td>
+            <td><a href="{{ route('temans.edit', $d->id) }}" class="btn btn-warning btn-sm"> Ubah </a> 
+            <form action="{{route('temans.destroy',$d->id)}}" method="POST" class="d-inline">
+                @csrf
+                @method('DELETE')
+                <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin menghapus Data?')">Hapus</button> 
+            </form>
+        </td>
         </tr>
     @endforeach
 

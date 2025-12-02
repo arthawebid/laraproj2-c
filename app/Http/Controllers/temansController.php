@@ -45,7 +45,7 @@ class temansController extends Controller
             'updated_at'=>now()
         ]);
 
-        return redirect()->route('temans.index')->with('sukses','Data Berhasil ditambahkan');
+        return redirect()->route('temans.index')->with('sukses','Data Berhasil di Tambahkan');
     }
 
     /**
@@ -87,7 +87,7 @@ class temansController extends Controller
             'telp'=>$request->telp,
             'updated_at'=>now()
         ]);
-        return redirect()->route('temans.index')->with('sukses','Data Berhasil diUbah');
+        return redirect()->route('temans.index')->with('sukses','Data Berhasil di Ubah');
     }
 
     /**
@@ -95,6 +95,7 @@ class temansController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        DB::table('temans')->where('id',$id)->delete();
+        return redirect()->route('temans.index')->with('sukses','Data Berhasil di Hapus');
     }
 }
