@@ -33,11 +33,7 @@ use Illuminate\Support\Facades\DB;
 ```bash
 copy php.bak c:\xampp\php\php.ini
 ```
-3. Pindah ke direktori/folder laraproj
-```bash
-cd laraproj
-```  
-4. copy file .env.example ke .env
+3. copy file .env.example ke .env
 ```bash
 copy .env.example .env
 ```

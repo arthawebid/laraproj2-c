@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\temans;
 
 class temansController extends Controller
 {
@@ -12,7 +13,8 @@ class temansController extends Controller
      */
     public function index()
     {
-        $dta = DB::table('temans')->get();
+        //$dta = DB::table('temans')->get();
+        $dta = temans::all();
         return view('temans.index', compact('dta') );
     }
 
