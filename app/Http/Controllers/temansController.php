@@ -13,8 +13,12 @@ class temansController extends Controller
      */
     public function index()
     {
+        // membaca data dengan class DB
         //$dta = DB::table('temans')->get();
+
+        // membaca data dengan Model temans
         $dta = temans::all();
+        
         return view('temans.index', compact('dta') );
     }
 
@@ -31,13 +35,15 @@ class temansController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $dta = $request->validate([
             'nama'=>'required|max:50',
             'alamat'=>'required',
             'kota'=>'required|max:50',
             'telp'=>'required|max:20',
         ]);
 
+        // Simpan data teman dengan menggunakan class DB
+        /*
         DB::table('temans')->insert([
             'nama'=>$request->nama,
             'alamat'=>$request->alamat,
@@ -46,6 +52,10 @@ class temansController extends Controller
             'created_at'=>now(),
             'updated_at'=>now()
         ]);
+        */
+
+        // Menyimpan data teman dengan Model temans
+        temans::create($dta);
 
         return redirect()->route('temans.index')->with('sukses','Data Berhasil di Tambahkan');
     }
@@ -63,7 +73,13 @@ class temansController extends Controller
      */
     public function edit(string $id)
     {
-        $dta = DB::table('temans')->where('id',$id)->first();
+        // mencari data berdasarkan id dengan menggunakan class DB
+        //$dta = DB::table('temans')->where('id',$id)->first();
+
+        // mencari data berdasarkan id dengan menggunakan Model temans
+        $dta = temans::findOrFail($id);
+        //$dta = temans::where('id',$id)->first();
+
         if(!$dta){
             abort(404);
         }
@@ -73,15 +89,18 @@ class temansController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    //public function update(Request $request, string $id)
+    public function update(Request $request, temans $teman)
     {
-        $request->validate([
+        $dta = $request->validate([
             'nama'=>'required|max:50',
             'alamat'=>'required',
             'kota'=>'required|max:50',
             'telp'=>'required|max:20',
         ]);
 
+        //menggunakan class DB
+        /*
         DB::table('temans')->where('id',$id)->update([
             'nama'=>$request->nama,
             'alamat'=>$request->alamat,
@@ -89,15 +108,29 @@ class temansController extends Controller
             'telp'=>$request->telp,
             'updated_at'=>now()
         ]);
+        */
+
+        //menggunakan Model
+        //$dta = temans::findOrFail($id);
+        $teman->update( $dta );
+
         return redirect()->route('temans.index')->with('sukses','Data Berhasil di Ubah');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    //public function destroy(string $id)
+    public function destroy(temans $teman)
     {
-        DB::table('temans')->where('id',$id)->delete();
+        // Menggunakan class DB
+        //DB::table('temans')->where('id',$id)->delete();
+
+        // Menggunakan Model
+        //$dta = temans::findOrFail($id);
+        //$dta->delete();
+        $teman->delete();
+
         return redirect()->route('temans.index')->with('sukses','Data Berhasil di Hapus');
     }
 }
